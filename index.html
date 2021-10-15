@@ -56,10 +56,73 @@
 				<h2 class="events-header">Events for <span class="highlight-text">every occasion</span></h2>
 				<div class="events-wrapper">
 					<div id="events-container" class="events-container">
+						<div id="events-results" class="events-results">
+							
+						</div>
+						<div id="events-filters" class="events-filters">
+							<form id="event-filters-form" class="event-filters-form">
+								<div class="radio-large-wrapper">
+									<input type="radio" id="event-archived-future" name="archived" value="0" checked>
+									<label for="archived-future">In The Future</label>
+									<input type="radio" id="event-archived-past" name="archived" value="1">
+									<label for="archived-past">In The Past</label>
+								</div>
 
-					</div>
-					<div id="events-filters" class="events-filters">
-						
+								<div class="event-name-search-wrapper filter-text-wrapper">
+									<i class="fas fa-search"></i>
+									<input type="text" id="event-name" name="event-name" placeholder="Search by name or location...">
+								</div>
+
+								<div class="event-filter-row">
+									<div class="event-filter-row-label">Event Location</div>
+									<div class="event-filter-row-inputs">
+										<select name="event-location" id="event-location">
+											<option value="All" selected>All</option>
+											<option value="Atlanta, GA">Atlanta, GA</option>
+											<option value="Coolray Field">Coolray Field</option>
+											<option value="SunTrust Plaza">SunTrust Plaza</option>
+											<option value="Peachtree Tower">Peachtree Tower</option>
+										</select>
+									</div>
+								</div>
+								<div class="event-filter-row">
+									<div class="event-filter-row-label">Event Length</div>
+									<div class="event-filter-row-inputs">
+										<select name="event-length-min" id="event-length-min">
+											<option value="30 Mins" selected>30 Mins</option>
+											<option value="1 Hour">1 Hour</option>
+											<option value="2 Hours">2 Hours</option>
+											<option value="3 Hours">3 Hours</option>
+											<option value="8 Hours">8 Hours</option>
+										</select>
+										<div class="filter-row-input-seperator">to</div>
+										<select name="event-length-Max" id="event-length-Max">
+											<option value="30 Mins">30 Mins</option>
+											<option value="1 Hour">1 Hour</option>
+											<option value="2 Hours">2 Hours</option>
+											<option value="3 Hours">3 Hours</option>
+											<option value="8 Hours" selected>8 Hours</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="event-filter-row">
+									<div class="event-filter-row-label">Seat Cost</div>
+									<div class="event-filter-row-inputs ">
+										<div class="filter-text-wrapper">
+											<i class="fas fa-dollar-sign"></i>
+											<input type="number" class="filter-cost-input" id="event-cost-min" name="event-cost-min" placeholder="Min">
+										</div>
+										<div class="filter-row-input-seperator">to</div>
+										<div class="filter-text-wrapper">
+											<i class="fas fa-dollar-sign"></i>
+											<input type="number" class="filter-cost-input" id="event-cost-max" name="event-cost-max" placeholder="Max">
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+
 					</div>
 				</div>
 			</div>

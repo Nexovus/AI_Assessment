@@ -9,6 +9,7 @@ body {
 a {
     color: #0e3b52;
     text-decoration: inherit;
+    transition: all 0.5s ease;
 }
 
 a:hover {
@@ -39,6 +40,10 @@ a:hover {
     color: #fc6053;
 }
 
+.site-nav-link.active-link:hover {
+    color: #0e3b52;
+}
+
 .site-nav li {
     display: inline-block;
 }
@@ -61,10 +66,17 @@ a:hover {
 
 .focus-area-background-container {
     position: absolute;
+    width: 50%;
+    height: 100%;
     right: 0;
-    margin-right: -380px;
+    overflow: hidden;
     transition: all 0.5s ease;
     z-index: -1;
+}
+
+.focus-area-background-container img {
+    left: 24px;
+    position: absolute;
 }
 
 .focus-area-content-container {
@@ -104,12 +116,96 @@ a:hover {
 
 .events-section-wrapper {
     background-color: #f6f7f8;
-    padding-top: 64px;
+    padding: 64px 0;
 }
 
 .events-header {
     font-size: 2.5em;
     margin: 32px 0;
+}
+
+.events-container {
+    display: flex;
+}
+
+.events-results {
+    width: 64%;
+}
+
+/* Events Filters */
+
+.events-filters {
+    flex-grow: 1;
+    padding: 0 32px;
+    min-width: 368px;
+}
+
+.event-filters-form > div + div {
+    margin-top: 24px;
+}
+
+.filter-text-wrapper {
+    border: 1px solid #dbe0e7;
+    background-color: #fff;
+    border-radius: 64px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-text-wrapper > i {
+    padding: 0 8px;
+    color: #fc6053;
+}
+
+.filter-text-wrapper > input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.filter-text-wrapper > input::placeholder {
+    color: #879da9;
+    opacity: 1;
+}
+
+.event-filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-filter-row-label {
+    color: #829aa5;
+    font-weight: 600;
+}
+
+.event-filter-row-inputs {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.event-filter-row-inputs select {
+    border-width: 0 0 2px 0;
+    border-color: #fc6053;
+    background: transparent;
+    font-size: 1.1em;
+    line-height: 1.5;
+    outline: none;
+}
+
+.filter-row-input-seperator {
+    color: #829aa5;
+    font-weight: 600;
+    padding: 0 8px;
+}
+
+.filter-cost-input {
+    width: 56px;
 }
 
 /* Reusable Styles */
@@ -160,6 +256,7 @@ a:hover {
 .solid-button {
     background-color: #fc6053;
     color: #fff;
+    box-shadow: 0 0 24px 0 #ecedf2;
 }
 
 .solid-button i {
@@ -169,10 +266,39 @@ a:hover {
 .solid-button:hover {
     background-color: #fff;
     color: #fc6053;
+    box-shadow: 0 0 0 0 #ecedf2;
 }
 
 .solid-button:hover i {
     color: #fc6053;
+}
+
+/* Text Radio Buttons */
+
+.radio-large-wrapper {
+    border: 1px solid #dbe0e7;
+    border-radius: 64px;
+    display: flex;
+}
+
+.radio-large-wrapper label {
+    border-radius: 64px;
+    color: #fc6053;
+    padding: 9px 24px;
+    transition: all 0.5s ease;
+    flex-grow: 1;
+    text-align: center;
+    margin: 4px;
+    font-weight: 600;
+}
+
+.radio-large-wrapper input[type="radio"] {
+    display: none;
+}
+
+.radio-large-wrapper input[type="radio"]:checked + label {
+    background-color: #fc6053;
+    color: #fff;
 }
 
 /* Responsive Styles */
