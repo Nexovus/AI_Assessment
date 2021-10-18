@@ -109,11 +109,14 @@ function generateEvents() {
 						newEvent.location = val;
 					}
 				}
+				// newEvent.length = generateLength();
+				// newEvent.director = generateDirector();
 			});
 			newEvents.push(newEvent);
 		}
 		console.log({'newEvents': newEvents});
 		// Json encode to make ajax response 'realistic'
+		renderEvents({'newEvents': JSON.stringify(newEvents)});
 	}
 }
 
@@ -135,7 +138,7 @@ function generateTitle(params) {
 }
 
 function renderEvents(params) {
-
+	console.log({'renderEvents params': params});
 }
 
 
