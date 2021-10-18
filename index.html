@@ -51,28 +51,31 @@
 				</div>
 			</div>
 		</div>
+		<!-- Events Section -->
 		<div class="events-section-wrapper wide-wrapper">
 			<div class="events-section-container container">
 				<h2 class="events-header">Events for <span class="highlight-text">every occasion</span></h2>
 				<div class="events-wrapper">
 					<div id="events-container" class="events-container">
+						<!-- Events Section Results -->
 						<div id="events-results" class="events-results">
 							
 						</div>
+						<!-- Events Section Filters -->
 						<div id="events-filters" class="events-filters">
 							<form id="event-filters-form" class="event-filters-form">
 								<div class="radio-large-wrapper">
 									<input type="radio" id="event-archived-future" name="archived" value="0" checked>
-									<label for="archived-future">In The Future</label>
+									<label for="event-archived-future">In The Future</label>
 									<input type="radio" id="event-archived-past" name="archived" value="1">
-									<label for="archived-past">In The Past</label>
+									<label for="event-archived-past">In The Past</label>
 								</div>
-
-								<div class="event-name-search-wrapper filter-text-wrapper">
+								<div class="event-title-search-wrapper filter-text-wrapper">
 									<i class="fas fa-search"></i>
-									<input type="text" id="event-name" name="event-name" placeholder="Search by name or location...">
+									<input type="text" id="event-title" name="event-title" placeholder="Search by name or location..." value="test">
 								</div>
-
+								<!-- Ideally, the following selects would be populated dynamically on the backend, 
+									js titles and locations hard coded to match -->
 								<div class="event-filter-row">
 									<div class="event-filter-row-label">Event Location</div>
 									<div class="event-filter-row-inputs">
@@ -82,6 +85,8 @@
 											<option value="Coolray Field">Coolray Field</option>
 											<option value="SunTrust Plaza">SunTrust Plaza</option>
 											<option value="Peachtree Tower">Peachtree Tower</option>
+											<option value="Reno, CA">Reno, CA</option>
+											<option value="Rainbowland">Rainbowland</option>
 										</select>
 									</div>
 								</div>
@@ -96,7 +101,7 @@
 											<option value="8 Hours">8 Hours</option>
 										</select>
 										<div class="filter-row-input-seperator">to</div>
-										<select name="event-length-Max" id="event-length-Max">
+										<select name="event-length-Max" id="event-length-max">
 											<option value="30 Mins">30 Mins</option>
 											<option value="1 Hour">1 Hour</option>
 											<option value="2 Hours">2 Hours</option>
@@ -111,12 +116,12 @@
 									<div class="event-filter-row-inputs ">
 										<div class="filter-text-wrapper">
 											<i class="fas fa-dollar-sign"></i>
-											<input type="number" class="filter-cost-input" id="event-cost-min" name="event-cost-min" placeholder="Min">
+											<input type="number" class="filter-cost-input" id="event-cost-min" name="event-cost-min" placeholder="Min" value="1">
 										</div>
 										<div class="filter-row-input-seperator">to</div>
 										<div class="filter-text-wrapper">
 											<i class="fas fa-dollar-sign"></i>
-											<input type="number" class="filter-cost-input" id="event-cost-max" name="event-cost-max" placeholder="Max">
+											<input type="number" class="filter-cost-input" id="event-cost-max" name="event-cost-max" placeholder="Max" value="100">
 										</div>
 									</div>
 								</div>
