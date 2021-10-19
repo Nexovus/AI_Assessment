@@ -1,5 +1,5 @@
 var eventsFilters = {
-	archived: 0,
+	archived: 'checked',
 	name: '',
 	location: '',
 	lengthMin: 0,
@@ -9,6 +9,8 @@ var eventsFilters = {
 	sizeMin: 0,
 	sizeMax: 1000
 }
+
+var preveiousFilters = {};
 
 var eventsToRender = 6;
 
@@ -41,19 +43,55 @@ var eventLocations = [
 	'Rainbowland'
 ];
 
+var eventImages = [
+	'./assets/event-1.png',
+	'./assets/event-2.png'
+];
+
+// I hate to do this, but without actual requests to get seperate HTML templates I must use a string.
+var eventTileHTML = '<div class="event-wrapper">' +
+		'<a href="#">' +
+			'<div class="event-container">' +
+					'<div class="event-image-container">' +
+						'<img src="{{image}}">' +
+						'<div class="event-image-details">' +
+							'<i class="fas fa-user"></i> {{director}} &#8226; {{duration}}' +
+						'</div>' +
+					'</div>' +
+					'<div class="event-details">' +
+						'<div class="event-title">' +
+							'{{title}}' +
+						'</div>' +
+						'<div class="event-date-location">' +
+							'{{date}} &#8226; {{location}}' +
+						'</div>' +
+					'</div>' +
+			'</div>' +
+		'</a>' +
+	'</div>';
+
 function updateEventFilterVals() {
-	eventsFilters = {
-		archived: $('.archived-radio:checked').attr('checked'),
-		title: $('#event-title').val(),
-		location: $('#event-location').val(),
-		lengthMin: $('#event-length-min').val(),
-		lengthMax: $('#event-length-max').val(),
-		costMin: $('#event-cost-min').val(),
-		costMax: $('#event-cost-max').val(),
-		sizeMin: 0,
-		sizeMax: 1000
+	console.log({
+		'before':	{'eventsFilters': eventsFilters,
+			'preveiousFilters': preveiousFilters}
+	});
+	if (eventsFilters === preveiousFilters) {
+		return true;
+	} else {
+		preveiousFilters = eventsFilters;
+		eventsFilters = {
+			archived: $('.archived-radio:checked').attr('checked'),
+			title: $('#event-title').val(),
+			location: $('#event-location').val(),
+			lengthMin: $('#event-length-min').val(),
+			lengthMax: $('#event-length-max').val(),
+			costMin: $('#event-cost-min').val(),
+			costMax: $('#event-cost-max').val(),
+			sizeMin: 0,
+			sizeMax: 1000
+		}
+		getEvents();
 	}
-	getEvents();
 };
 
 
@@ -74,13 +112,13 @@ function getEvents() {
 
 function generateEvents() {
 	// Simulate ajax response
-	var earliestEventDate = new Date(1999, 0, 1);
-	var latestEventDate = new Date(2142, 12, 31);
+	let earliestEventDate = new Date(1999, 0, 1);
+	let latestEventDate = new Date(2142, 12, 31);
 
-	var newEvents = [];
+	let newEvents = [];
 
-	var titleMatch = false;
-	var allTitles = false;
+	let titleMatch = false;
+	let allTitles = false;
 	if (eventsFilters.title !== '') {
 		$.each(eventTitles, function(i, val) {
 			if (val.indexOf(eventsFilters.title) >= 0) {
@@ -92,14 +130,15 @@ function generateEvents() {
 	}
 
 	if (!$.isEmptyObject({eventsFilters}) && (titleMatch || allTitles)) {
-		for (var i = 0; i < eventsToRender; i++) {
+		for (let i = 0; i < eventsToRender; i++) {
 			
-			var newEvent = {};
+			let newEvent = {};
 			$.each(eventsFilters, function (key, val) {
 				if (key == 'archived') {
-					newEvent.date = generateDate({'date': val == 'checked' ? latestEventDate : earliestEventDate});
+					let newDate = generateDate({'date': val == 'checked' ? latestEventDate : earliestEventDate});
+					newEvent.date = newDate.toLocaleString('en-us', { month: 'long' }) + ' ' + newDate.getDay() + ', ' + newDate.getFullYear();
 				} else if (key == 'title') {
-					var newTitle = generateTitle({'titleMatch': titleMatch, 'allTitles': allTitles});
+					let newTitle = generateTitle({'titleMatch': titleMatch, 'allTitles': allTitles});
 					if (newTitle.length > 31) newTitle = newTitle.substring(0, 31) + '...';
 					newEvent.title = newTitle;
 				} else if (key =='location') {
@@ -108,22 +147,23 @@ function generateEvents() {
 					} else {
 						newEvent.location = val;
 					}
+					newEvent.image = eventImages[Math.floor(Math.random() * eventImages.length)];
 				}
+				newEvent.director = eventDirectors[Math.floor(Math.random() * eventDirectors.length)]
 				// newEvent.length = generateLength();
-				// newEvent.director = generateDirector();
 			});
 			newEvents.push(newEvent);
 		}
-		console.log({'newEvents': newEvents});
+		// console.log({'newEvents': newEvents});
 		// Json encode to make ajax response 'realistic'
 		renderEvents({'newEvents': JSON.stringify(newEvents)});
 	}
 }
 
 function generateDate(params) {
-	var currentDate = new Date();
-	var startDate = params.date > currentDate ? currentDate : params.date;
-	var endDate = params.date > currentDate ? params.date : currentDate;
+	let currentDate = new Date();
+	let startDate = params.date > currentDate ? currentDate : params.date;
+	let endDate = params.date > currentDate ? params.date : currentDate;
 	return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 }
 
@@ -138,10 +178,24 @@ function generateTitle(params) {
 }
 
 function renderEvents(params) {
-	console.log({'renderEvents params': params});
+	// console.log({'renderEvents params': JSON.parse(params.newEvents)});
+	let tilesHTML = '';
+	let newEvents = JSON.parse(params.newEvents);
+	newEvents.forEach(function (event) {
+		let tileHTML = eventTileHTML;
+		$.each(event, function (key, val) {
+			// console.log('{{' + key + '}}');
+			tileHTML = tileHTML.replace('{{' + key + '}}', val);
+		});
+		tilesHTML += tileHTML;
+	});
+	// console.log(tilesHTML);
+	$('#events-results').append($.parseHTML(tilesHTML));
+	console.log({
+		'after':	{'eventsFilters': eventsFilters,
+			'preveiousFilters': preveiousFilters}
+	});
 }
-
-
 
 // 'DocReady' / self executing function
 $(function () {
@@ -149,7 +203,8 @@ $(function () {
 		if ($(this).prop('href') == window.location.href) {
 			$(this).addClass('active-link');
 		}
-	})
+	});
 	// update event selection on page load
 	updateEventFilterVals();
 });
+

@@ -130,6 +130,62 @@ a:hover {
 
 .events-results {
     width: 64%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event-wrapper {
+    width: 50%;
+}
+
+.event-container {
+    margin: 8px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.event-wrapper a:hover .event-container {
+    box-shadow: 0 0 16px 0 #0000002e;
+}
+
+.event-image-container {
+    position: relative;
+}
+
+.event-image-container img {
+    width: 100%;
+}
+
+.event-image-details {
+    position: absolute;
+    bottom: 5px;
+    background: #00000094;
+    color: #fff;
+    width: 100%;
+    padding: 8px 16px;
+}
+
+.event-image-details i.fas {
+    font-size: .8em;
+    padding-right: 8px;
+}
+
+.event-details {
+    padding: 8px 16px;
+}
+
+.event-title {
+    color: #0e3b52;
+    font-weight: 800;
+    font-size: 1.1em;
+    padding-bottom: 8px;
+}
+
+.event-date-location {
+    color: #6e8997;
+    padding-bottom: 8px;
 }
 
 /* Events Filters */
