@@ -15,6 +15,7 @@ var preveiousFilters = {};
 var eventsToRender = 6;
 
 // Arrays of event details to select from
+// since results must be generated here instead of fetched
 var eventDirectors = [
 	'Jane Doe',
 	'Eric Chan',
@@ -70,6 +71,8 @@ var eventTileHTML = '<div class="event-wrapper">' +
 		'</a>' +
 	'</div>';
 
+
+// Updating events starts here
 function updateEventFilterVals() {
 	if (eventsFilters === preveiousFilters) {
 		return true;
@@ -113,6 +116,7 @@ function generateEvents() {
 
 	let newEvents = [];
 
+	// Checking for title matches
 	let titleMatch = false;
 	let allTitles = false;
 	if (eventsFilters.title !== '') {
@@ -125,18 +129,16 @@ function generateEvents() {
 		allTitles = true;
 	}
 
+	// Iterate filters and generate events accordingly
 	if (!$.isEmptyObject({eventsFilters}) && (titleMatch || allTitles)) {
 		for (let i = 0; i < eventsToRender; i++) {
 			
 			let newEvent = {};
 			$.each(eventsFilters, function (key, val) {
 				if (key == 'archived') {
-					let newDate = generateDate({'date': val == 'checked' ? latestEventDate : earliestEventDate});
-					newEvent.date = newDate.toLocaleString('en-us', { month: 'long' }) + ' ' + newDate.getDay() + ', ' + newDate.getFullYear();
+					newEvent.date = generateDate({'date': val == 'checked' ? latestEventDate : earliestEventDate});
 				} else if (key == 'title') {
-					let newTitle = generateTitle({'titleMatch': titleMatch, 'allTitles': allTitles});
-					if (newTitle.length > 31) newTitle = newTitle.substring(0, 31) + '...';
-					newEvent.title = newTitle;
+					newEvent.title = generateTitle({'titleMatch': titleMatch, 'allTitles': allTitles});
 				} else if (key =='location') {
 					if (val == 'All') {
 						newEvent.location = eventLocations[Math.floor(Math.random() * eventLocations.length)];
@@ -146,7 +148,6 @@ function generateEvents() {
 					newEvent.image = eventImages[Math.floor(Math.random() * eventImages.length)];
 				}
 				newEvent.director = eventDirectors[Math.floor(Math.random() * eventDirectors.length)]
-				// newEvent.length = generateLength();
 			});
 			newEvents.push(newEvent);
 		}
@@ -155,23 +156,30 @@ function generateEvents() {
 	}
 }
 
+// Field generating functions for generateEvents()
 function generateDate(params) {
 	let currentDate = new Date();
 	let startDate = params.date > currentDate ? currentDate : params.date;
 	let endDate = params.date > currentDate ? params.date : currentDate;
-	return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+	let newDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+	return newDate.toLocaleString('en-us', { month: 'long' }) + ' ' + newDate.getDay() + ', ' + newDate.getFullYear();
 }
 
 function generateTitle(params) {
 	if (params.titleMatch) {
-		return $.grep(eventTitles, function(search) {
+		var newTitle = $.grep(eventTitles, function(search) {
 			return search.toLowerCase().indexOf(eventsFilters.title.toLowerCase()) > -1;
 		});
 	} else if (params.allTitles) {
-		return eventTitles[Math.floor(Math.random() * eventTitles.length)];
+		var newTitle = eventTitles[Math.floor(Math.random() * eventTitles.length)];
 	}
+	if (newTitle.length > 31) {
+		newTitle = newTitle.substring(0, 31) + '...';
+	}
+	return newTitle;
 }
 
+// Render HTML blocks for generated events
 function renderEvents(params) {
 	let tilesHTML = '';
 	let newEvents = JSON.parse(params.newEvents);
@@ -192,10 +200,11 @@ $(function () {
 			$(this).addClass('active-link');
 		}
 	});
+	// Update event section when filter inputs change
 	$('.event-filter').change(function () {
 		updateEventFilterVals();
 	});
-	// update event selection on page load
+	// Update event selection on page load
 	updateEventFilterVals();
 });
 
