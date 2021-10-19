@@ -56,6 +56,21 @@ a:hover {
     height: 40px;
 }
 
+/* Footer Styles */
+
+.site-footer {
+    padding: 32px 16px;
+}
+
+.site-footer-copyright {
+    color: #6e8997;
+}
+
+.site-footer .container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Focus Area */
 
 .focus-area-wrapper {
@@ -66,7 +81,7 @@ a:hover {
 
 .focus-area-background-container {
     position: absolute;
-    width: 50%;
+    width: 49%;
     height: 100%;
     right: 0;
     overflow: hidden;
@@ -85,7 +100,7 @@ a:hover {
 }
 
 .focus-area-content {
-    width: 49%;
+    width: 50%;
     padding: 0 16px 24px 0;
     background-color: #ffffff;
     box-shadow: 0 0 16px 16px #ffffff;

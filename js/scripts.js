@@ -117,7 +117,7 @@ function generateEvents() {
 	let allTitles = false;
 	if (eventsFilters.title !== '') {
 		$.each(eventTitles, function(i, val) {
-			if (val.indexOf(eventsFilters.title) >= 0) {
+			if (val.toLowerCase().indexOf(eventsFilters.title.toLowerCase()) >= 0) {
 				titleMatch = true;
 			}
 		});
@@ -165,7 +165,7 @@ function generateDate(params) {
 function generateTitle(params) {
 	if (params.titleMatch) {
 		return $.grep(eventTitles, function(search) {
-			return search.toLowerCase().indexOf(eventsFilters.title) > -1;
+			return search.toLowerCase().indexOf(eventsFilters.title.toLowerCase()) > -1;
 		});
 	} else if (params.allTitles) {
 		return eventTitles[Math.floor(Math.random() * eventTitles.length)];
@@ -182,7 +182,7 @@ function renderEvents(params) {
 		});
 		tilesHTML += tileHTML;
 	});
-	$('#events-results').append($.parseHTML(tilesHTML));
+	$('#events-results').html($.parseHTML(tilesHTML));
 }
 
 // 'DocReady' / self executing function
@@ -191,6 +191,9 @@ $(function () {
 		if ($(this).prop('href') == window.location.href) {
 			$(this).addClass('active-link');
 		}
+	});
+	$('.event-filter').change(function () {
+		updateEventFilterVals();
 	});
 	// update event selection on page load
 	updateEventFilterVals();
