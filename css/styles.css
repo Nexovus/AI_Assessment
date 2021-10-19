@@ -72,6 +72,7 @@ a:hover {
     overflow: hidden;
     transition: all 0.5s ease;
     z-index: -1;
+    opacity: 1;
 }
 
 .focus-area-background-container img {
@@ -88,6 +89,7 @@ a:hover {
     padding: 0 16px 24px 0;
     background-color: #ffffff;
     box-shadow: 0 0 16px 16px #ffffff;
+    transition: all 0.5s ease;
 }
 
 .focus-area-header {
@@ -126,16 +128,19 @@ a:hover {
 
 .events-container {
     display: flex;
+    flex-direction: row-reverse;
 }
 
 .events-results {
     width: 64%;
     display: flex;
     flex-wrap: wrap;
+    transition: all 0.5s ease;
 }
 
 .event-wrapper {
     width: 50%;
+    transition: all 0.5s ease;
 }
 
 .event-container {
@@ -192,8 +197,8 @@ a:hover {
 
 .events-filters {
     flex-grow: 1;
-    padding: 0 32px;
-    min-width: 368px;
+    /* padding: 0 32px; */
+    min-width: 345px;
 }
 
 .event-filters-form > div + div {
@@ -360,3 +365,77 @@ a:hover {
 }
 
 /* Responsive Styles */
+
+@media screen and (min-width: 1200px) {
+    .events-filters {
+        padding: 0 32px;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .focus-area-content {
+        width: 100%;
+    }
+
+    .focus-area-background-container {
+        opacity: 0;
+    }
+    
+    .events-filters {
+        padding: 16px 8px;
+    }
+    
+    .events-container {
+        flex-direction: column;
+    }
+
+    .events-results {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .focus-area-header {
+        font-size: 11vw;
+    }
+
+    .site-nav-container {
+        flex-direction: column;
+    }
+
+    .site-nav {
+        margin-top: 8px;
+    }
+
+    .event-wrapper {
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 440px) {
+    .focus-area-buttons {
+        flex-direction: column;
+    }
+
+    .focus-area-buttons .large-button {
+        text-align: center;
+    }
+
+    .large-button + .large-button {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+
+    .site-nav {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .site-nav li + li {
+        padding-left: 0px;
+        padding-top: 8px;
+    }
+}
