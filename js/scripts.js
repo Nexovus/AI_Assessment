@@ -71,10 +71,6 @@ var eventTileHTML = '<div class="event-wrapper">' +
 	'</div>';
 
 function updateEventFilterVals() {
-	console.log({
-		'before':	{'eventsFilters': eventsFilters,
-			'preveiousFilters': preveiousFilters}
-	});
 	if (eventsFilters === preveiousFilters) {
 		return true;
 	} else {
@@ -154,7 +150,6 @@ function generateEvents() {
 			});
 			newEvents.push(newEvent);
 		}
-		// console.log({'newEvents': newEvents});
 		// Json encode to make ajax response 'realistic'
 		renderEvents({'newEvents': JSON.stringify(newEvents)});
 	}
@@ -178,23 +173,16 @@ function generateTitle(params) {
 }
 
 function renderEvents(params) {
-	// console.log({'renderEvents params': JSON.parse(params.newEvents)});
 	let tilesHTML = '';
 	let newEvents = JSON.parse(params.newEvents);
 	newEvents.forEach(function (event) {
 		let tileHTML = eventTileHTML;
 		$.each(event, function (key, val) {
-			// console.log('{{' + key + '}}');
 			tileHTML = tileHTML.replace('{{' + key + '}}', val);
 		});
 		tilesHTML += tileHTML;
 	});
-	// console.log(tilesHTML);
 	$('#events-results').append($.parseHTML(tilesHTML));
-	console.log({
-		'after':	{'eventsFilters': eventsFilters,
-			'preveiousFilters': preveiousFilters}
-	});
 }
 
 // 'DocReady' / self executing function
